@@ -1,11 +1,10 @@
-class MyProxy:
+class myproxy_8680:
     def __init__(self, proxies=None, minvalue=0, maxvalue=10):
         if proxies is None:
             self.proxies = [
-                {'address': 'http://10.10.90.75:1004', 'health': 10},
-                {'address': 'http://10.10.90.75:1003', 'health': 10},
-                {'address': 'http://10.10.90.75:1002', 'health': 10},
-                {'address': 'http://10.10.90.75:1006', 'health': 0}
+                {'address': 'http://10.10.90.75:1005', 'health': maxvalue},
+                {'address': 'http://10.10.90.75:1006', 'health': maxvalue},
+                {'address': '', 'health': maxvalue}
             ]
         else:
             self.proxies = proxies
@@ -25,7 +24,7 @@ class MyProxy:
     def get_healthiest_proxy(self):
         sorted_proxies = sorted(self.proxies, key=lambda x: x['health'], reverse=True)
         print(sorted_proxies)
-        if sorted_proxies[0]['health'] == 0:
+        if sorted_proxies[0]['health'] == self.minvalue :
             for proxy in sorted_proxies:
                 proxy['health'] = self.maxvalue
         return sorted_proxies[0]['address']
@@ -38,3 +37,4 @@ class MyProxy:
                 else:
                     proxy['health'] = max(proxy['health'] - 3, self.minvalue)
                 break
+
